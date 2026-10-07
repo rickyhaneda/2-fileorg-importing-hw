@@ -117,7 +117,13 @@ print(ds) #making sure it worked
 # Re-import the data so that filename becomes a column
 
 # ANSWER
-
+ds()
+ds <- read_tsv(data_A_file_names, col_names = col_names,
+               skip = 7,
+               col_types = "iccl",
+               id = "source_file")
+ds$trial_hun <- ds$trial_num + 100
+print(ds)
 
 ### QUESTION 8 -----
 
@@ -126,4 +132,16 @@ print(ds) #making sure it worked
 # There are two sheets of data -- import each one into a new tibble
 
 # ANSWER
+install.packages("readxl")
+library("readxl")
+?readxl
+col_names_date <- c("Participant", "Date")
+demo_info <- read_excel(here("data_B","participant_info.xlsx"), sheet = 1)
+date_info <- read_excel(here("data_B","participant_info.xlsx"), 
+                        sheet = 2, col_names = col_names_date)
+print(demo_info)
+print(date_info)
+pt_info <- left_join(demo_info, date_info, by = "Participant")
+print(pt_info)
+
 
