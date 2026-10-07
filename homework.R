@@ -70,7 +70,8 @@ ds1
 # ANSWER
 
 if (!dir.exists("data_A_cleaned")) dir.create("data_A_cleaned")
-write_csv(ds1, file = "data_A_cleaned/6191_1_clean.csv")
+write_csv(ds1, file = "data_A_cleaned/6191_1_clean.csv") 
+#named it the clean version of the exact same number to keep things simple
 
 ### QUESTION 4 ----- 
 
@@ -78,14 +79,16 @@ write_csv(ds1, file = "data_A_cleaned/6191_1_clean.csv")
 # Store it to a variable
 
 # ANSWER
-
+data_A_file_names <- list.files('data_A', full.names = TRUE)
 
 ### QUESTION 5 ----- 
 
 # Read all of the files in data_A into a single tibble called ds
 
 # ANSWER
-
+ds <- read_tsv(data_A_file_names, col_names = col_names,
+skip = 7)
+print(ds)
 
 ### QUESTION 6 -----
 
@@ -98,7 +101,13 @@ write_csv(ds1, file = "data_A_cleaned/6191_1_clean.csv")
 # (It should work now, but you'll see a warning because of the erroneous data point)
 
 # ANSWER
-
+ds$trial_hun <- ds$trial_num + 100 #first try
+?read_tsv #checking types
+ds <- read_tsv(data_A_file_names, col_names = col_names,
+               skip = 7, col_types = "iccl") #redoing dataset with the collumn types
+print(ds) # making sure it worked
+ds$trial_hun <- ds$trial_num + 100 # now creating the column
+print(ds) #making sure it worked
 
 ### QUESTION 7 -----
 
