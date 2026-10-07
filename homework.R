@@ -1,7 +1,7 @@
 #PSYC 259 Homework 1 - Data Import
 #For full credit, provide answers for at least 6/8 questions
 
-#List names of students collaborating with (no more than 2): 
+#List names of students collaborating with (no more than 2): Naomi
 
 #GENERAL INFO 
 #data_A contains 12 files of data. 
@@ -19,10 +19,14 @@
 
 # ANSWER 
 
+install.packages("tidyverse")
+library(tidyverse)
 
 ### QUESTION 2 ----- 
 
 # Read in the data for 6191_1.txt using here()
+
+
 # Hint 1: use getwd first to check working directory
 # Hint 2: make sure you let R know about the data_A subfolder
 # Hint 3: nest the readr and here() functions 
@@ -33,9 +37,19 @@
 
 # A list of column names are provided to use:
 
-col_names  <-  c("trial_num","speed_actual","speed_response","correct")
 
 # ANSWER
+col_names  <-  c("trial_num","speed_actual","speed_response","correct")
+library(here)
+getwd()
+
+here("data_A","6191_1.txt")
+file.exists(here("data_A","6191_1.txt"))
+
+ds1 <- read_tsv(here("data_A","6191_1.txt"), col_names = col_names,
+                skip = 7)
+print(ds1)
+
 
 ### QUESTION 3a. ----- 
 
@@ -44,6 +58,8 @@ col_names  <-  c("trial_num","speed_actual","speed_response","correct")
 
 # ANSWER
 
+ds1$trial_hun <- ds1$trial_num + 100
+ds1
 
 ### QUESTION 3b. ----- 
 # Write the new data from question 3a to a CSV file in the "data_A_cleaned" folder
@@ -53,6 +69,8 @@ col_names  <-  c("trial_num","speed_actual","speed_response","correct")
 
 # ANSWER
 
+if (!dir.exists("data_A_cleaned")) dir.create("data_A_cleaned")
+write_csv(ds1, file = "data_A_cleaned/6191_1_clean.csv")
 
 ### QUESTION 4 ----- 
 
